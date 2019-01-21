@@ -89,25 +89,44 @@ class StudentChooseClass(wx.Frame):
                            wx.aui.AuiPaneInfo().Top().CaptionVisible(False).CloseButton(False).PaneBorder(
                                False).Dock().Resizable().FloatingSize(wx.Size(80, 68)).Row(0).Layer(100))
 
+        self.m_staticText71 = wx.StaticText(self, wx.ID_ANY, u" ", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_staticText71.Wrap(-1)
+
+        self.m_staticText71.SetFont(
+            wx.Font(11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "宋体"))
+        self.m_staticText71.SetBackgroundColour(wx.Colour(224, 224, 224))
+
+        self.m_mgr.AddPane(self.m_staticText71,
+                           wx.aui.AuiPaneInfo().Bottom().CaptionVisible(False).CloseButton(False).PaneBorder(
+                               False).Dock().Resizable().FloatingSize(wx.Size(80, 68)).Row(0).Layer(80))
+
+        self.m_staticText711 = wx.StaticText(self, wx.ID_ANY, u" ", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_staticText711.Wrap(-1)
+
+        self.m_staticText711.SetFont(
+            wx.Font(11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "宋体"))
+        self.m_staticText711.SetBackgroundColour(wx.Colour(224, 224, 224))
+
+        self.m_mgr.AddPane(self.m_staticText711,
+                           wx.aui.AuiPaneInfo().Bottom().CaptionVisible(False).CloseButton(False).PaneBorder(
+                               False).Dock().Resizable().FloatingSize(wx.Size(80, 68)).Row(0).Layer(80))
+
         self.m_textCtrl5 = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
                                        wx.TE_CENTER)
-        self.m_textCtrl5.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVEBORDER))
+        self.m_textCtrl5.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
         self.m_textCtrl5.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNFACE))
 
         self.m_mgr.AddPane(self.m_textCtrl5, wx.aui.AuiPaneInfo().Top().CaptionVisible(False).PinButton(
             True).Dock().Resizable().FloatingSize(wx.Size(125, 71)).BottomDockable(False).TopDockable(
             False).RightDockable(False).Layer(100))
 
-        self.class_number_refresh_button = wx.Button(self, wx.ID_ANY, u"刷新", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.m_mgr.AddPane(self.class_number_refresh_button, wx.aui.AuiPaneInfo().Top().CaptionVisible(False).PinButton(
-            True).Dock().Resizable().FloatingSize(wx.Size(100, 47)).Layer(100))
-
         self.student_detail_grid = wx.grid.Grid(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
         self.student_detail_grid.CreateGrid(1, 5)
-        self.student_detail_grid.EnableEditing(True)
+        self.student_detail_grid.EnableEditing(False)
         self.student_detail_grid.EnableGridLines(True)
+        self.student_detail_grid.SetGridLineColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
         self.student_detail_grid.EnableDragGridSize(False)
         self.student_detail_grid.SetMargins(0, 0)
 
@@ -145,9 +164,10 @@ class StudentChooseClass(wx.Frame):
         self.selectable_class_grid = wx.grid.Grid(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.selectable_class_grid.CreateGrid(5, 5)
-        self.selectable_class_grid.EnableEditing(True)
+        self.selectable_class_grid.CreateGrid(0, 5)
+        self.selectable_class_grid.EnableEditing(False)
         self.selectable_class_grid.EnableGridLines(True)
+        self.selectable_class_grid.SetGridLineColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
         self.selectable_class_grid.EnableDragGridSize(False)
         self.selectable_class_grid.SetMargins(0, 0)
 
@@ -211,9 +231,10 @@ class StudentChooseClass(wx.Frame):
         self.passed_class_grid = wx.grid.Grid(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.passed_class_grid.CreateGrid(5, 5)
-        self.passed_class_grid.EnableEditing(True)
+        self.passed_class_grid.CreateGrid(1, 5)
+        self.passed_class_grid.EnableEditing(False)
         self.passed_class_grid.EnableGridLines(True)
+        self.passed_class_grid.SetGridLineColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
         self.passed_class_grid.EnableDragGridSize(False)
         self.passed_class_grid.SetMargins(0, 0)
 
@@ -244,13 +265,19 @@ class StudentChooseClass(wx.Frame):
         self.selected_class_grid = wx.grid.Grid(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.selected_class_grid.CreateGrid(5, 5)
-        self.selected_class_grid.EnableEditing(True)
+        self.selected_class_grid.CreateGrid(0, 5)
+        self.selected_class_grid.EnableEditing(False)
         self.selected_class_grid.EnableGridLines(True)
+        self.selected_class_grid.SetGridLineColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
         self.selected_class_grid.EnableDragGridSize(False)
         self.selected_class_grid.SetMargins(0, 0)
 
         # Columns
+        self.selected_class_grid.SetColSize(0, 67)
+        self.selected_class_grid.SetColSize(1, 97)
+        self.selected_class_grid.SetColSize(2, 59)
+        self.selected_class_grid.SetColSize(3, 80)
+        self.selected_class_grid.SetColSize(4, 80)
         self.selected_class_grid.EnableDragColMove(False)
         self.selected_class_grid.EnableDragColSize(True)
         self.selected_class_grid.SetColLabelSize(30)
@@ -268,9 +295,14 @@ class StudentChooseClass(wx.Frame):
         self.selected_class_grid.SetRowLabelAlignment(wx.ALIGN_CENTER, wx.ALIGN_CENTER)
 
         # Label Appearance
+        self.selected_class_grid.SetLabelFont(
+            wx.Font(11, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "黑体"))
 
         # Cell Defaults
         self.selected_class_grid.SetDefaultCellAlignment(wx.ALIGN_CENTER, wx.ALIGN_TOP)
+        self.selected_class_grid.SetFont(
+            wx.Font(12, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "黑体"))
+
         self.m_mgr.AddPane(self.selected_class_grid, wx.aui.AuiPaneInfo().Top().CaptionVisible(False).PinButton(
             True).Dock().Resizable().FloatingSize(wx.Size(79, 58)).Row(2).Layer(90))
 
@@ -295,6 +327,8 @@ class StudentChooseClass(wx.Frame):
         self.Bind(wx.EVT_MENU, self.StudentChooseClass_to_StudentLogin,
                   id=self.m_menuItem_StudentChooseClass_to_StudentLogin.GetId())
         self.Bind(wx.EVT_MENU, self.StudentChooseClass_to_Index, id=self.m_menuItem_StudentChooseClass_to_Index.GetId())
+        self.passed_class_grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.redict2StudentScoreList)
+        self.passed_class_grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self.redict2StudentScoreList)
 
     def __del__(self):
         self.m_mgr.UnInit()
@@ -304,4 +338,7 @@ class StudentChooseClass(wx.Frame):
         event.Skip()
 
     def StudentChooseClass_to_Index(self, event):
+        event.Skip()
+
+    def redict2StudentScoreList(self, event):
         event.Skip()

@@ -25,19 +25,36 @@ class SchoolDbBaseClass(object):
             self.conn = pymssql.connect(MSSQL_HOST, MSSQL_USER,
                                         MSSQL_PASSWORD, MSSQL_DATABASE)
 
-    def single_user_data(self, ac, pwd):
+    def single_user_data(self, ac):
         '''
         :param ac: 账号
         :param pwd: 密码
         :return: 第一条记录;不可能有Bug的
         '''
         cursor = self.conn.cursor(as_dict=True)
-        cursor.execute('SELECT * FROM S WHERE LOGN=\'{sno}\' AND PSWD=\'{pswd}\''.format(
-            sno=ac, pswd=pwd
+        cursor.execute('SELECT SNO AS 学号, SNAME AS 姓名, AGE AS 年龄,SEX AS 性别, SDEPT AS 所在院系'
+                       ' FROM S WHERE LOGN=\'{sno}\''.format(
+            sno=ac
         ))
         for row in cursor:
             return row
         return False
+
+    def single_user_score(self, ac):
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute('SELECT C2.CNO AS 课程号 , GRADE AS 平时成绩 , PGRADE AS 考试成绩 , EGRADE AS 总评成绩 , C2.CNAME AS 课程名称'
+                       ' FROM SC LEFT JOIN C C2 on SC.CNO = C2.CNO'
+                       ' WHERE SC.SNO = \'{SNO}\''.format(SNO=ac)
+                       )
+        s_u_score = []
+        for row in cursor:
+            if row['课程号'] is not None:
+                s_u_score.append([row['课程号'].strip(" "),
+                                  row['课程名称'].strip(" "),
+                                  str(row['平时成绩']).strip(" "),
+                                  str(row['考试成绩']).strip(" "),
+                                  str(row['总评成绩']).strip(" ")])
+        return s_u_score
 
     def login(self, ac, pwd):
         cursor = self.conn.cursor(as_dict=True)
@@ -117,5 +134,76 @@ class SchoolDbBaseClass(object):
         for row in cursor:
             if row['学号'] is not None:
                 d_sc.append([row['学号'].strip(" "), str(row['成绩']).strip(" ")])
-        print(d_sc)
+        # print(d_sc)
         return d_sc
+
+    def get_selectable_classes(self, arg):
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute(
+            'SELECT  CNO AS 课程号, CNAME AS 课程名 ,CREDIT AS 学分, TNAME AS 任课教师,CDEPT AS 开课系 FROM C'
+        )
+        c = []
+        for row in cursor:
+            if row['任课教师'] is not None:
+                c.append([row['课程号'].strip(" "),
+                          row['课程名'].strip(" "),
+                          str(row['学分']),
+                          row['开课系'].strip(" "),
+                          row['任课教师'].strip(" ")], )
+        return c
+
+    def get_avg_s_group_by_class(self):
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute(
+            'SELECT C2.CNAME AS 课程名,AVG(GRADE) AS 平均成绩 FROM SC LEFT JOIN C C2 on SC.CNO = C2.CNO GROUP BY C2.CNAME'
+        )
+        label_list = []
+        data_list = []
+        # for row in cursor:
+        #     avg_s_g_by_class.append([
+        #         row['课程名'].strip(" "),
+        #         str(row['平均成绩'])
+        #     ])
+        for row in cursor:
+            label_list.append(
+                row['课程名'].strip(" ")
+            )
+            data_list.append(
+                row['平均成绩']
+            )
+        return label_list, data_list
+
+    def m_manage_StudentDetail(self, ac):
+        '''
+        :param ac: 账号
+        :param pwd: 密码
+        :return: 第一条记录;不可能有Bug的
+        '''
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute('SELECT SNO AS 学号, SNAME AS 姓名, AGE AS 年龄,SEX AS 性别, SDEPT AS 所在院系,LOGN AS 登录名,PSWD AS 密码 FROM S')
+        m_sd = []
+
+        for row in cursor:
+            if row['学号'] is not None:
+                m_sd.append([row['学号'].strip(" "),
+                             row['姓名'].strip(" "),
+                             str(row['年龄']),
+                             row['性别'].strip(" "),
+                             row['所在院系'].strip(" "),
+                             row['登录名'].strip(" "),
+                             row['密码'].strip(" "),
+                             ])
+        return m_sd
+
+# def m_manage_ClassDetail(self):
+#     cursor = self.conn.cursor(as_dict=True)
+#     cursor.execute('SELECT  CNO 课程号, CNAME 课程名, CREDIT 学分数, CDEPT 所在系 ,TNAME 任课教师  FROM C')
+#     m_cd = []
+#     for row in cursor:
+#         if row['任课教师'] is not None:
+#             m_cd.append([row['课程号'].strip(" "),
+#                       row['课程名'].strip(" "),
+#                       str(row['学分数']),
+#                       row['所在系'].strip(" "),
+#                       row['任课教师'].strip(" ")], )
+#     return m_cd

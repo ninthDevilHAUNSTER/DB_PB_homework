@@ -20,7 +20,8 @@ class ScoreManageMent(wx.Frame):
 
     def __init__(self, parent):
         self.col2teacher_dict = {}
-        self.student2_score_list = [[0, 0]] * 6
+        self.student2_score_list = [['', '']] * 6
+        self.lock_for_grid = False
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=u"成绩管理", pos=wx.DefaultPosition, size=wx.Size(600, 300),
                           style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
@@ -107,7 +108,7 @@ class ScoreManageMent(wx.Frame):
 
         # Grid
         self.m_grid_select_column_to_student.CreateGrid(6, 2)
-        self.m_grid_select_column_to_student.EnableEditing(True)
+        self.m_grid_select_column_to_student.EnableEditing(False)
 
         self.m_grid_select_column_to_student.EnableGridLines(True)
         self.m_grid_select_column_to_student.EnableDragGridSize(False)
@@ -157,6 +158,17 @@ class ScoreManageMent(wx.Frame):
 
         self.SetSizer(bSizer4)
         self.Layout()
+        self.m_menubar2 = wx.MenuBar(0)
+        self.m_menu2 = wx.Menu()
+        self.m_menuItem5 = wx.MenuItem(self.m_menu2, wx.ID_ANY, u"课程详细信息", wx.EmptyString, wx.ITEM_NORMAL)
+        self.m_menu2.Append(self.m_menuItem5)
+
+        self.m_menuItem6 = wx.MenuItem(self.m_menu2, wx.ID_ANY, u"学生详细信息", wx.EmptyString, wx.ITEM_NORMAL)
+        self.m_menu2.Append(self.m_menuItem6)
+
+        self.m_menubar2.Append(self.m_menu2, u"维护")
+
+        self.SetMenuBar(self.m_menubar2)
 
         self.Centre(wx.BOTH)
 
@@ -164,8 +176,10 @@ class ScoreManageMent(wx.Frame):
         self.m_choice_show_selectable_columns.Bind(wx.EVT_CHOICE, self.select_one_class)
         self.m_button_return2index.Bind(wx.EVT_BUTTON, self.ScoreManageMent_to_Index)
 
+
     def __del__(self):
         pass
+
 
     # Virtual event handlers, overide them in your derived class
     def select_one_class(self, event):
@@ -174,6 +188,7 @@ class ScoreManageMent(wx.Frame):
         self.m_staticText_column_name_active.SetLabel(index2)
         self.m_staticText_class_teacher_active.SetLabel(self.col2teacher_dict[index2])
         # event.Skip()
+
 
     def ScoreManageMent_to_Index(self, event):
         event.Skip()
