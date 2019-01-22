@@ -160,11 +160,11 @@ class ScoreManageMent(wx.Frame):
         self.Layout()
         self.m_menubar2 = wx.MenuBar(0)
         self.m_menu2 = wx.Menu()
-        self.m_menuItem5 = wx.MenuItem(self.m_menu2, wx.ID_ANY, u"课程详细信息", wx.EmptyString, wx.ITEM_NORMAL)
-        self.m_menu2.Append(self.m_menuItem5)
+        self.m_menuItem_ManageStudentDetail = wx.MenuItem(self.m_menu2, wx.ID_ANY, u"学生详细信息", wx.EmptyString, wx.ITEM_NORMAL)
+        self.m_menu2.Append(self.m_menuItem_ManageStudentDetail)
 
-        self.m_menuItem6 = wx.MenuItem(self.m_menu2, wx.ID_ANY, u"学生详细信息", wx.EmptyString, wx.ITEM_NORMAL)
-        self.m_menu2.Append(self.m_menuItem6)
+        self.m_menuItem_ManageClassDetail = wx.MenuItem(self.m_menu2, wx.ID_ANY, u"课程详细信息", wx.EmptyString, wx.ITEM_NORMAL)
+        self.m_menu2.Append(self.m_menuItem_ManageClassDetail)
 
         self.m_menubar2.Append(self.m_menu2, u"维护")
 

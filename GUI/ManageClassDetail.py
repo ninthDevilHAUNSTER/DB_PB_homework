@@ -153,13 +153,39 @@ class ManageClassDetail(wx.Frame):
     def __del__(self):
         pass
 
+    def OnRefresh_Data(self):
+        data = self.DBA.m_manage_StudentDetail(ac=1)
+        self.m_staticText_total_count.SetLabel(str(data.__len__()))
+
+        # 表格大小自适应
+        self.m_grid_manage_class_detail.ClearGrid()
+        if self.m_grid_manage_class_detail.GetNumberRows() < data.__len__():
+            self.m_grid_manage_class_detail.AppendRows(
+                data.__len__() - self.m_grid_manage_class_detail.GetNumberRows())
+        else:
+            self.m_grid_manage_class_detail.DeleteRows(
+                numRows=self.m_grid_manage_class_detail.GetNumberRows() - data.__len__())
+
+        # 刷新数据
+        for row in range(self.m_grid_manage_class_detail.GetNumberRows()):
+            for col in range(self.m_grid_manage_class_detail.GetNumberCols()):
+                try:
+                    self.m_grid_manage_class_detail.SetCellValue(
+                        row=row, col=col, s=data[row][col]
+                    )
+                except IndexError as e:
+                    pass
+
     # Virtual event handlers, overide them in your derived class
     def insert_action(self, event):
         dlgtext = ClassDetailInputDialog(None)
         if dlgtext.ShowModal() == wx.ID_OK:
             insert_data = dlgtext.GetInputValue()
-            print(insert_data)
-            # TODO DO INSERT
+            if insert_data[0] == " ":
+                return False
+            else:
+                self.DBA.manage_c_insert_data(insert_data)
+                self.OnRefresh_Data()
 
     def update_action(self, event):
         if self.lock_for_grid == False:
@@ -177,6 +203,7 @@ class ManageClassDetail(wx.Frame):
             self.m_button_delete.Enable()
             self.m_button_exit.Enable()
             self.lock_for_grid = False
+            self.OnRefresh_Data()
 
     def delete_action(self, event):
         dlgtext = wx.TextEntryDialog(
@@ -185,8 +212,10 @@ class ManageClassDetail(wx.Frame):
         # dlgtext.SetValue("Python is the best!")
         if dlgtext.ShowModal() == wx.ID_OK:
             SNO = dlgtext.GetValue()
+            self.DBA.manage_c_delete_data(SNO)
             # TODO DO DELETE
         dlgtext.Destroy()
+        self.OnRefresh_Data()
 
     def return_action(self, event):
         event.Skip()

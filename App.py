@@ -9,6 +9,8 @@ from GUI.StudentLogin import StudentLogin
 from GUI.StudentScoreList import StudentScoreList
 from GUI.MessageDialog import MessageDialog_CANCEL, MessageDialog_OK, MessageDialog_Yes_No
 from GUI.ScoreAnalyze import ScoreAnalyze
+from GUI.ManageStudentDetail import ManageStudentDetail
+from GUI.ManageClassDetail import ManageClassDetail
 # DB package import
 from Db.SchoolDbBaseClass import SchoolDbBaseClass
 # MISC package import
@@ -36,6 +38,8 @@ class MyApp(wx.App):
         self.StudentLogin = StudentLogin(parent=None)
         self.StudentScoreList = StudentScoreList(parent=None)
         self.ScoreAnalyze = ScoreAnalyze(parent=None)
+        self.ManageClassDetail = ManageClassDetail(parent=None)
+        self.ManageStudentDetail = ManageStudentDetail(parent=None)
         # Init Router
         self.__bind_router()
         self.__bind_event()
@@ -53,6 +57,8 @@ class MyApp(wx.App):
             self.StudentScoreList.Hide()
             self.ScoreManageMent.Hide()
             self.ScoreAnalyze.Hide()
+            self.ManageClassDetail.Hide()
+            self.ManageStudentDetail.Hide()
             self.ExitMainLoop()
 
     def __OnRefresh_StudentScoureList(self, event, arg):
@@ -154,6 +160,7 @@ class MyApp(wx.App):
         self.ScoreManageMent.Bind(wx.EVT_SHOW,
                                   lambda event: self.__OnRefresh_ScoreManageMent(event, '1'),
                                   self.ScoreManageMent)
+
         self.Bind(wx.EVT_BUTTON,
                   lambda event: self.OnScoreManageMent_selected(event, 'T1'),
                   self.ScoreManageMent.m_button_search_for_sth)
@@ -280,6 +287,12 @@ class MyApp(wx.App):
         self.ScoreManageMent.Bind(wx.EVT_CLOSE,
                                   lambda event: self.OnRouter_change(event, 'Index'),
                                   self.ScoreManageMent)
+        self.ScoreManageMent.Bind(wx.EVT_MENU,
+                                  lambda event: self.OnRouter_change(event, 'ManageClassDetail'),
+                                  self.ScoreManageMent.m_menuItem_ManageClassDetail)
+        self.ScoreManageMent.Bind(wx.EVT_MENU,
+                                  lambda event: self.OnRouter_change(event, 'ManageStudentDetail'),
+                                  self.ScoreManageMent.m_menuItem_ManageStudentDetail)
 
         # StudentScoreList Router
         # Add Router Here
@@ -308,6 +321,22 @@ class MyApp(wx.App):
         self.ScoreAnalyze.Bind(wx.EVT_CLOSE,
                                lambda event: self.OnRouter_change(event, 'ScoreManageMent'),
                                self.ScoreAnalyze)
+
+        # ManageStudentDetail
+        # Add Router Here
+        self.ManageStudentDetail.Bind(wx.EVT_CLOSE,
+                                      lambda event: self.OnRouter_change(event, 'ScoreManageMent'),
+                                      self.ManageStudentDetail)
+        self.ManageStudentDetail.m_button_exit.Bind(wx.EVT_BUTTON,
+                                                    lambda event: self.OnRouter_change(event, 'ScoreManageMent'))
+
+        # ManageClassDetail
+        # Add Router Here
+        self.ManageClassDetail.Bind(wx.EVT_CLOSE,
+                                    lambda event: self.OnRouter_change(event, 'ScoreManageMent'),
+                                    self.ManageClassDetail)
+        self.ManageClassDetail.m_button_exit.Bind(wx.EVT_BUTTON,
+                                                  lambda event: self.OnRouter_change(event, 'ScoreManageMent'))
 
     def OnScoreManageMent_selected(self, event, args):
         for row in range(6):
@@ -429,12 +458,22 @@ class MyApp(wx.App):
                 self.StudentChooseClass.Hide()
                 self.StudentScoreList.Hide()
                 self.ScoreAnalyze.Hide()
+                self.ManageClassDetail.Hide()
+                self.ManageStudentDetail.Hide()
                 self.ScoreManageMent.Show()
                 self.SetTopWindow(self.ScoreManageMent)
         elif self.__current_active_frame == "ScoreAnalyze":
             self.ScoreAnalyze.Show()
             self.ScoreManageMent.Hide()
             self.SetTopWindow(self.ScoreAnalyze)
+        elif self.__current_active_frame == "ManageClassDetail":
+            self.ManageClassDetail.Show()
+            self.ScoreManageMent.Hide()
+            self.SetTopWindow(self.ManageClassDetail)
+        elif self.__current_active_frame == "ManageStudentDetail":
+            self.ManageStudentDetail.Show()
+            self.ScoreManageMent.Hide()
+            self.SetTopWindow(self.ManageStudentDetail)
 
 
 if __name__ == '__main__':

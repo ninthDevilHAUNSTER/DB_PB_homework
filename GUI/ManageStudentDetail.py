@@ -184,8 +184,11 @@ class ManageStudentDetail(wx.Frame):
         dlgtext = StudentDetailInputDialog(None)
         if dlgtext.ShowModal() == wx.ID_OK:
             insert_data = dlgtext.GetInputValue()
-            print(insert_data)
-            # TODO DO INSERT
+            if insert_data[0] == " ":
+                return False
+            else:
+                self.DBA.manage_s_insert_data(insert_data)
+                self.OnRefresh_Data()
 
     def update_action(self, event):
         if self.lock_for_grid == False:
@@ -203,6 +206,7 @@ class ManageStudentDetail(wx.Frame):
             self.m_button_delete.Enable()
             self.m_button_exit.Enable()
             self.lock_for_grid = False
+            self.OnRefresh_Data()
 
     def delete_action(self, event):
         dlgtext = wx.TextEntryDialog(
@@ -211,8 +215,10 @@ class ManageStudentDetail(wx.Frame):
         # dlgtext.SetValue("Python is the best!")
         if dlgtext.ShowModal() == wx.ID_OK:
             SNO = dlgtext.GetValue()
+            self.DBA.manage_s_delete_data(SNO)
             # TODO DO DELETE
         dlgtext.Destroy()
+        self.OnRefresh_Data()
 
     def return_action(self, event):
         event.Skip()

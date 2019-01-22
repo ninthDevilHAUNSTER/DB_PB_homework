@@ -180,7 +180,8 @@ class SchoolDbBaseClass(object):
         :return: 第一条记录;不可能有Bug的
         '''
         cursor = self.conn.cursor(as_dict=True)
-        cursor.execute('SELECT SNO AS 学号, SNAME AS 姓名, AGE AS 年龄,SEX AS 性别, SDEPT AS 所在院系,LOGN AS 登录名,PSWD AS 密码 FROM S')
+        cursor.execute(
+            'SELECT SNO AS 学号, SNAME AS 姓名, AGE AS 年龄,SEX AS 性别, SDEPT AS 所在院系,LOGN AS 登录名,PSWD AS 密码 FROM S')
         m_sd = []
 
         for row in cursor:
@@ -194,6 +195,47 @@ class SchoolDbBaseClass(object):
                              row['密码'].strip(" "),
                              ])
         return m_sd
+
+    def manage_s_insert_data(self, insert_data):
+        assert insert_data.__len__() == 8
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute('INSERT INTO S VALUES'
+                       '(\'{SNO}\',\'{SNAME}\',\'{SEX}\',{AGE},\'{SDEPT}\',{FEES},\'{LOGN}\',\'{PSWD}\')'.format(
+            SNO=insert_data[0],
+            SNAME=insert_data[1],
+            SEX=insert_data[2],
+            AGE=insert_data[3],
+            SDEPT=insert_data[4],
+            FEES=insert_data[5],
+            LOGN=insert_data[6],
+            PSWD=insert_data[7]
+        ))
+
+    def manage_s_update_data(self, insert_data):
+        pass
+
+    def manage_s_delete_data(self, SNO):
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute('DELETE FROM S WHERE  SNO  = \'{}\''.format(SNO))
+
+    def manage_c_insert_data(self, insert_data):
+        assert insert_data.__len__() == 5
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute("INSERT INTO C VALUES "
+                       "('{CNO}','{CNAME}',{CREDIT},'{CDEPT}','{TNAME}')".format(
+            CNO=insert_data[0],
+            CNAME=insert_data[1],
+            CREDIT=insert_data[2],
+            CDEPT=insert_data[3],
+            TNAME=insert_data[4]
+        ))
+
+    def manage_c_update_data(self, data):
+        pass
+
+    def manage_c_delete_data(self, CNO):
+        cursor = self.conn.cursor(as_dict=True)
+        cursor.execute("DELETE FROM C WHERE  CNO = '{}'".format(CNO))
 
 # def m_manage_ClassDetail(self):
 #     cursor = self.conn.cursor(as_dict=True)

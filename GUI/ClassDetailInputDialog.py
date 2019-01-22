@@ -34,7 +34,7 @@ class ClassDetailInputDialog(wx.Dialog):
 
         gSizer19.Add(self.m_staticText47, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.m_textCtrl_CNO = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_textCtrl_CNO = wx.TextCtrl(self, wx.ID_ANY, " ", wx.DefaultPosition, wx.DefaultSize, 0)
         gSizer19.Add(self.m_textCtrl_CNO, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.m_staticText48 = wx.StaticText(self, wx.ID_ANY, u"课程名", wx.DefaultPosition, wx.DefaultSize, 0)
@@ -42,7 +42,7 @@ class ClassDetailInputDialog(wx.Dialog):
 
         gSizer19.Add(self.m_staticText48, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.m_textCtrl_CNAME = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_textCtrl_CNAME = wx.TextCtrl(self, wx.ID_ANY, " ", wx.DefaultPosition, wx.DefaultSize, 0)
         gSizer19.Add(self.m_textCtrl_CNAME, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.m_staticText49 = wx.StaticText(self, wx.ID_ANY, u"学分数", wx.DefaultPosition, wx.DefaultSize, 0)
@@ -50,7 +50,7 @@ class ClassDetailInputDialog(wx.Dialog):
 
         gSizer19.Add(self.m_staticText49, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
-        self.m_textCtrl_CREDIT = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_textCtrl_CREDIT = wx.TextCtrl(self, wx.ID_ANY, " ", wx.DefaultPosition, wx.DefaultSize, 0)
         gSizer19.Add(self.m_textCtrl_CREDIT, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.m_staticText50 = wx.StaticText(self, wx.ID_ANY, u"所在系", wx.DefaultPosition, wx.DefaultSize, 0)
@@ -58,7 +58,7 @@ class ClassDetailInputDialog(wx.Dialog):
 
         gSizer19.Add(self.m_staticText50, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
-        self.m_textCtrl_CDEPT = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_textCtrl_CDEPT = wx.TextCtrl(self, wx.ID_ANY, " ", wx.DefaultPosition, wx.DefaultSize, 0)
         gSizer19.Add(self.m_textCtrl_CDEPT, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.m_staticText51 = wx.StaticText(self, wx.ID_ANY, u"任课老师", wx.DefaultPosition, wx.DefaultSize, 0)
@@ -66,7 +66,7 @@ class ClassDetailInputDialog(wx.Dialog):
 
         gSizer19.Add(self.m_staticText51, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.m_textCtrl_TNAME = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.m_textCtrl_TNAME = wx.TextCtrl(self, wx.ID_ANY, " ", wx.DefaultPosition, wx.DefaultSize, 0)
         gSizer19.Add(self.m_textCtrl_TNAME, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         gSizer19.Add((0, 0), 1, wx.EXPAND, 5)
